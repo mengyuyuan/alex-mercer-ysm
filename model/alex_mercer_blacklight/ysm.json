@@ -1,0 +1,34 @@
+{
+  "spec": 2,
+  "metadata": {
+    "name": "A哥 · 黑光独立骨架 V4.4",
+    "tips": "35骨骼 / 三格高 / 基础动作与黑光姿态适配 / 翅膀独立",
+    "authors": [
+      {
+        "name": "末者",
+        "role": "模型"
+      }
+    ]
+  },
+  "properties": {
+    "height_scale": 1.5,
+    "width_scale": 1.5,
+    "preview_animation": "gui",
+    "default_texture": "mercer",
+    "free": true
+  },
+  "files": {
+    "player": {
+      "model": {
+        "main": "main.json",
+        "arm": "arm.json"
+      },
+      "animation": {
+        "main": "main.animation.json"
+      },
+      "texture": [
+        "mercer.png"
+      ]
+    }
+  }
+}
