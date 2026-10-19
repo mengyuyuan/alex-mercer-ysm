@@ -1,0 +1,12 @@
+{
+  "model/alex_mercer_blacklight/main.animation.json": {
+    "constant_keys_verified": 299140
+  },
+  "source/main.animation.json": {
+    "constant_keys_verified": 0
+  },
+  "unchanged_non_head_cubes": 167,
+  "old_cubes": 214,
+  "new_cubes": 262,
+  "runtime_test": "Not repeated in this task"
+}

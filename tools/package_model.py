@@ -3,6 +3,7 @@ from pathlib import Path
 import hashlib
 import json
 import zipfile
+import argparse
 
 ROOT = Path(__file__).resolve().parents[1]
 MODEL = ROOT / 'model/alex_mercer_blacklight'
@@ -23,6 +24,10 @@ def package(destination, files):
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--version', default='4.5')
+    args = parser.parse_args()
+    assert all(c.isdigit() or c == '.' for c in args.version), 'Numeric version required'
     config = load(MODEL / 'ysm.json')
     player = config['files']['player']
     names = set()
@@ -58,12 +63,12 @@ def main():
     DIST.mkdir(exist_ok=True)
     notices = [(ROOT / name, name) for name in ['README.md', 'LICENSE', 'CREDITS.md', 'docs/MOTION_PROVENANCE_ZH.md']]
     model_files = [(path, 'alex_mercer_blacklight/' + path.relative_to(MODEL).as_posix()) for path in MODEL.rglob('*') if path.is_file()]
-    package(DIST / 'Alex-Mercer-V4.4-YSM.zip', model_files + notices)
+    package(DIST / f'Alex-Mercer-V{args.version}-YSM.zip', model_files + notices)
     source_files = []
     for folder in ['source', 'model', 'tools', 'docs']:
         source_files += [(p, p.relative_to(ROOT).as_posix()) for p in (ROOT / folder).rglob('*') if p.is_file() and '__pycache__' not in p.parts]
     source_files += [(ROOT / name, name) for name in ['README.md', 'LICENSE', 'CREDITS.md', 'CHANGELOG.md']]
-    package(DIST / 'Alex-Mercer-V4.4-Source.zip', source_files)
+    package(DIST / f'Alex-Mercer-V{args.version}-Source.zip', source_files)
     sums = [hashlib.sha256(p.read_bytes()).hexdigest() + '  ' + p.name for p in sorted(DIST.glob('*.zip'))]
     (DIST / 'SHA256SUMS.txt').write_text('\n'.join(sums) + '\n', encoding='utf-8')
     print(f'Validated {count} animations and {len(names)} distinct bone names; packages saved to {DIST}')
